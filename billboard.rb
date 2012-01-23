@@ -33,24 +33,26 @@ def children(line)
     child_lines.concat children(child_lines.last[:line])
   end
   
-  return child_lines.uniq
+  return child_lines.map{|l| { line:l[:line].reject(&:empty?) } }
 end
 
 def combinations_for(billboard)
-  combinations = [billboard[:text]]
-  combinations.concat children(combinations)
+  combinations = [{line:[billboard[:text]]}]
+  combinations.concat(children([billboard[:text]]))
 end
 
-def max_font_for(line)
-  puts line.inspect 
-  return 1
+def max_font_for(data, billboard)
+  display = data[:line]
+  max_columns = display.map{|line| line.length}.max
+  max_font_by_width = billboard[:width] / max_columns
+  max_font_by_height = billboard[:height] / display.length
+  
+  return [max_font_by_height,max_font_by_width].min
 end
 
 def required_font_size_for(billboard)
   return 0 if too_narrow(billboard)
-  foo = combinations_for(billboard).map{|line| max_font_for(line)}
-  
-  return 1
+  return combinations_for(billboard).map{|line| max_font_for(line, billboard)}.max
 end
 
 def main
