@@ -16,24 +16,24 @@ def join(words)
   words.join(' ')
 end
 
-def new_line(index,head,tail)
-  line = [join(tail[0..index]), join(tail[(index+1)..-1])]
-  puts "Index:#{index} Head:#{head} Tail:#{tail} Line:#{line}"
-  return line unless head
-  return line.insert(0, head)
+def new_line(index, head, tail)
+  new_line = []
+  new_line.concat(head) if head
+  return { line:new_line.concat( [join(tail[0..index]), join(tail[(index+1)..-1])] ) }
 end
 
 def children(line)
-  head = line.first if line.length > 1
   tail = line.last.split(' ')
   return [] if tail.length == 1
+
   child_lines = []
-  for i in 0..(tail.length-1)
-    child_lines << new_line(i,head,tail)
-    child_lines.concat children(child_lines.last)
+  head = line[0..(line.length-2)] if line.length > 1
+  for i in 0..tail.length-1
+    child_lines << new_line(i, head, tail)
+    child_lines.concat children(child_lines.last[:line])
   end
   
-  return child_lines
+  return child_lines.uniq
 end
 
 def combinations_for(billboard)
@@ -41,9 +41,15 @@ def combinations_for(billboard)
   combinations.concat children(combinations)
 end
 
+def max_font_for(line)
+  puts line.inspect 
+  return 1
+end
+
 def required_font_size_for(billboard)
   return 0 if too_narrow(billboard)
-  combinations_for(billboard)
+  foo = combinations_for(billboard).map{|line| max_font_for(line)}
+  
   return 1
 end
 
