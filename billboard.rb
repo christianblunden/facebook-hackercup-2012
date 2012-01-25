@@ -56,17 +56,18 @@ def required_font_size_for(billboard)
 end
 
 def main
-  input = File.open('example_input.txt')
+  input = File.open('billboards.txt')
   output = File.open('output.txt', 'w')
   
   expected_billboards = input.gets
   count = 1
   while(!input.eof?) do
-    billboard = get_billboard(input)
-    font = required_font_size_for(billboard)
-    puts "Case #{count}: #{font}"
+    font = required_font_size_for(get_billboard(input))
+    output.write "Case #{count}: #{font}"
     count += 1
   end
+  
+  output.close
 end
 
 main()
