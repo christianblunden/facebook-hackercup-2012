@@ -11,7 +11,7 @@ end
 
 def main
   output = File.open('alphabet_output.txt', 'w')
-  lines = File.readlines('alphabet_example.txt')
+  lines = File.readlines('alphabet_soup.txt')
   count = lines[0].to_i
   for i in 1..count do
     characters = lines[i].each_char
