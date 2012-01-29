@@ -14,14 +14,12 @@ def message_count(max_int, message)
   return 1 if end_of(message)
   return 0 if invalid?(message, max_int)
   
-  #puts "max:#{max_int} message:#{message.inspect}"
   number = ""
   branches = 0
   message[0..(max_int.to_s.length-1)].each_char do |c|
     if (number+c).to_i <= max_int
       number += c 
       rest_of_message = message[number.length..-1]
-      #puts "New Number:#{number} rest:#{rest_of_message}"
       branches += 1 * message_count(max_int, rest_of_message)
     end
   end
@@ -37,11 +35,7 @@ def main
     for count in 1..input.gets.to_i
       m,message = input.gets.split(/\W/)
       message = input.gets if message.nil?
-      begin
-        output.puts "Case #{count}: #{message_count(m.to_i,message.strip) % MOD}"
-      rescue
-        output.puts "Case #{count}: 0"
-      end
+      output.puts "Case #{count}: #{message_count(m.to_i,message.strip) % MOD}"
     end
   end
 end
