@@ -22,11 +22,7 @@ def invalid(x,y,m,n)
 end
 
 def shortest_path_for(distinct_path_count)
-  puts fact(20).to_i
-  puts ff(20).to_i
-  raise
-  puts "DISTINCT PATHS:#{distinct_path_count}"
-  max_grid = [100].max
+  max_grid = [250].max
   solutions = []
   (0..max_grid).each do |m|
     (0..max_grid).each do |n|
@@ -48,8 +44,8 @@ end
 
 def main
   
-  input = File.readlines('checkpoint_example.txt')
-  #input = File.readlines('checkpoints.txt')
+  #input = File.readlines('checkpoint_example.txt')
+  input = File.readlines('checkpoint.txt')
   
   File.open('checkpoint_output.txt', 'w') do |output|  
     for count in 1..input[0].to_i
