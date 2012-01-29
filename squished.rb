@@ -28,8 +28,8 @@ def message_count(max_int, message)
 end
 
 def main
-  input = File.open('squished_example.txt')
-  #input = File.readlines('squished.txt')
+  #input = File.open('squished_example.txt')
+  input = File.open('squished_status.txt')
   
   File.open('squished_output.txt', 'w') do |output|  
     for count in 1..input.gets.to_i
